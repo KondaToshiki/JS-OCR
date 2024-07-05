@@ -1,4 +1,3 @@
-import { receivedText, recievedValue } from "../serialModule.js";
 
 const canvas = document.querySelector('#canvas');
 const video = document.createElement('video');
@@ -65,13 +64,19 @@ navigator.mediaDevices.getUserMedia({
     document.querySelector('#result').textContent = JSON.stringify(e);
 });
 
-const btn = document.getElementById("btn")
-
-btn.addEventListener("click", function() {
-    receivedText()
-    videoController(value)
+async function connect() {
+     
+        try { 
+            port = await navigator.serial.requestPort()
+            await port.open({baudRate: 115200})
+            console.log("connect")
+        } catch(e) {
+            console.log(e)
+        }
     
-})
+    
+}
+
 
 function videoController(recievedValue) {
     if(recievedValue === "start") {
